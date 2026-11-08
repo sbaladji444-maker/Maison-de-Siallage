@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17120f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src https://*.googleapis.com https://*.firebaseio.com; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Maison Sillage | Parfumerie</title>
+<style>
+:root{--dark:#17120f;--gold:#c59a5b;--cream:#f7f3ec;--muted:#766f66;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--dark);font-family:Arial,Helvetica,sans-serif}
+header{background:var(--dark);color:#fff;padding:17px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.brand{font:24px Georgia,serif;letter-spacing:1px}.brand span{color:var(--gold)}nav{display:flex;gap:17px;flex-wrap:wrap}nav a{color:#eee;text-decoration:none;font-size:14px}
+.hero{padding:75px 7%;min-height:390px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(15,12,10,.93),rgba(15,12,10,.42)),url('https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1800&q=85') center/cover;color:white}
+.hero-content{max-width:650px}.eyebrow{color:#e6c38e;text-transform:uppercase;letter-spacing:3px;font-size:12px}.hero h1{font:clamp(38px,7vw,68px) Georgia,serif;line-height:1.05;margin:17px 0}.hero p{line-height:1.7;color:#eee;max-width:500px}
+.btn{display:inline-block;background:var(--gold);color:#17120f;border:0;border-radius:3px;padding:13px 18px;font-weight:bold;text-decoration:none;cursor:pointer}.btn:hover{filter:brightness(1.07)}
+main{max-width:1200px;margin:auto;padding:45px 20px}.heading{text-align:center;margin:0 auto 28px}.heading h2{font:34px Georgia,serif;margin:0 0 9px}.heading p{color:var(--muted);margin:0}
+.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:22px}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{background:#fff;border:1px solid #ddd2c4;padding:9px 13px;border-radius:30px;cursor:pointer}.filter.active{background:var(--dark);color:white;border-color:var(--dark)}
+.search{max-width:260px;padding:11px;border:1px solid #ddd2c4;border-radius:4px;font:inherit}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:20px}.product{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 5px 18px #20160d10}.product img{width:100%;height:220px;object-fit:cover;background:#e8e0d5}.info{padding:16px}.tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#96703d}.product h3{font:22px Georgia,serif;margin:7px 0}.desc{font-size:13px;line-height:1.5;color:var(--muted);min-height:39px}.price{font-weight:bold;color:#986a30;font-size:18px;margin:13px 0}.product .btn{width:100%}
+.order-section{padding-top:65px}.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}.panel{background:white;border-radius:8px;padding:23px;box-shadow:0 5px 18px #20160d10}.panel h2,.contact h2{font:27px Georgia,serif;margin:0 0 16px}
+label{display:block;font-size:14px;font-weight:bold;margin:13px 0 6px}input,textarea{width:100%;padding:12px;border:1px solid #ddd2c4;border-radius:4px;font:inherit}textarea{min-height:75px;resize:vertical}
+.cart-line{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding:10px 0;font-size:14px}.remove{border:0;background:none;color:#a33;cursor:pointer}.total{display:flex;justify-content:space-between;font-weight:bold;font-size:18px;margin:17px 0}.empty{color:var(--muted);font-size:14px;padding:10px 0}
+.contact{background:#211a15;color:white;padding:25px;border-radius:8px;margin-top:20px}.contact p{color:#e4ddd5;line-height:1.6}.contact a{color:#e6bd80}.snap{display:inline-block;background:#f5d000;color:#17120f!important;padding:10px 13px;border-radius:4px;text-decoration:none;font-weight:bold}
+.note{font-size:12px;color:var(--muted);line-height:1.5}footer{text-align:center;background:#17120f;color:#cfc5b8;padding:22px;font-size:13px}
+
+.admin-wrap{margin-top:65px}.admin-toggle{background:#272019;color:#fff;border:1px solid #b78b50;padding:12px 16px;border-radius:4px;cursor:pointer;font-weight:bold}
+.admin-panel{display:none;margin-top:16px}.admin-panel.open{display:block}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.admin-panel .btn{margin-top:14px}.admin-products{margin-top:18px}.admin-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #eee;font-size:14px}.admin-row button{border:0;background:#f4e8e4;color:#8d2d21;padding:7px 10px;border-radius:4px;cursor:pointer}.admin-hint{font-size:12px;color:var(--muted);line-height:1.5}
+.product.sold img{filter:grayscale(1);opacity:.55}.btn[disabled]{background:#cfc7ba;color:#6b645b;cursor:not-allowed;filter:none}.badge-sold{display:inline-block;background:#8d2d21;color:#fff;font-size:11px;padding:3px 8px;border-radius:20px;margin-left:6px;text-transform:uppercase;letter-spacing:1px}
+.qty{display:inline-flex;align-items:center;gap:8px;margin-top:6px}.qty button{width:30px;height:30px;border:1px solid #ddd2c4;background:#fff;border-radius:50%;font-size:17px;cursor:pointer}
+.admin-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.admin-row .alt{background:#efe7d8;color:#4a3a20}.btn-cancel{background:#eee;color:#333;margin-left:8px}
+@media(max-width:600px){.admin-grid{grid-template-columns:1fr}}
+
+@media(max-width:760px){.layout{grid-template-columns:1fr}.hero{padding:60px 7%;min-height:350px}header{position:static}.search{max-width:none;width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">MAISON <span>SILLAGE</span></div>
+  <nav><a href="#accueil">Accueil</a><a href="#boutique">Parfums</a><a href="#commande">Panier</a><a href="#contact">Contact</a></nav>
+</header>
+<section class="hero" id="accueil"><div class="hero-content">
+  <div class="eyebrow">Parfumerie • Homme, femme & mixte</div>
+  <h1>Votre parfum, votre signature.</h1>
+  <p>Des fragrances pour chaque personnalité, des essentiels aux parfums d'exception. Choisissez vos articles et envoyez votre commande sur WhatsApp.</p>
+  <a class="btn" href="#boutique">Explorer la boutique</a>
+</div></section>
+
+<main>
+<section id="boutique">
+  <div class="heading"><h2>La collection</h2><p>Une sélection de parfums pour toutes les personnalités.</p></div>
+  <div class="toolbar">
+    <div class="filters">
+      <button class="filter active" data-filter="Tous">Tous</button>
+      <button class="filter" data-filter="Homme">Homme</button>
+      <button class="filter" data-filter="Femme">Femme</button>
+      <button class="filter" data-filter="Mixte">Mixte</button>
+    </div>
+    <input class="search" id="search" type="search" placeholder="Rechercher un parfum...">
+  </div>
+  <div class="products" id="products"></div>
+</section>
+
+<section class="order-section" id="commande">
+  <div class="heading"><h2>Votre panier</h2><p>Ajoutez un ou plusieurs parfums avant de commander.</p></div>
+  <div class="layout">
+    <div class="panel">
+      <h2>Récapitulatif</h2>
+      <div id="cart"><p class="empty">Votre panier est vide. Choisissez un parfum dans la collection.</p></div>
+      <div class="total"><span>Total estimé</span><span id="total">0 FCFA</span></div>
+      <form id="orderForm">
+        <h2 style="margin-top:25px">Vos coordonnées</h2>
+        <label for="customer">Nom et prénom *</label><input id="customer" required maxlength="80" placeholder="Votre nom complet">
+        <label for="phone">Votre téléphone *</label><input id="phone" type="tel" required maxlength="20" placeholder="Ex. 07 00 00 00 00">
+        <label for="city">Commune / Ville *</label><input id="city" required maxlength="80" placeholder="Ex. Abidjan, Cocody">
+        <label for="details">Précisions sur la commande</label><textarea id="details" maxlength="500" placeholder="Livraison, format souhaité, questions..."></textarea>
+        <p class="note">Le bouton ouvre WhatsApp avec votre récapitulatif. Votre commande sera transmise lorsque vous appuierez sur « Envoyer » dans WhatsApp. Le prix de livraison sera confirmé avec la boutique.</p>
+        <button class="btn" type="submit">Commander sur WhatsApp</button>
+      </form>
+    </div>
+    <aside>
+      <div class="contact" id="contact">
+        <h2>Contact & conseils</h2>
+        <p>Besoin d'un conseil ou d'une information ? Contactez directement la boutique.</p>
+        <p><strong>WhatsApp</strong><br><a href="https://wa.me/2250595009935" target="_blank" rel="noopener">+225 05 95 00 99 35</a></p>
+        <p><strong>Snapchat</strong></p>
+        <a class="snap" href="https://www.snapchat.com/add/bvlvdji_44" target="_blank" rel="noopener">Ajouter @bvlvdji_44</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="admin-wrap" id="gestion">
+  <div class="heading"><h2>Gestion de la boutique</h2><p>Ajoute et gère toi-même les parfums et leurs prix.</p></div>
+  <button class="admin-toggle" type="button" id="adminToggle">Ouvrir l'espace commerçant</button>
+  <div class="panel admin-panel" id="adminPanel">
+    <div id="loginArea">
+      <h2>Connexion commerçant</h2>
+      <p class="admin-hint">Connecte-toi avec le compte créé dans Firebase Authentication. L'inscription publique est volontairement désactivée.</p>
+      <form id="loginForm">
+        <label for="adminEmail">Adresse e-mail</label><input id="adminEmail" type="email" autocomplete="username" required placeholder="tonadresse@email.com">
+        <label for="adminPassword">Mot de passe</label><input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Mot de passe">
+        <button class="btn" type="submit">Se connecter</button>
+        <p id="loginMessage" class="admin-hint" aria-live="polite"></p>
+      </form>
+    </div>
+    <div id="managerArea" hidden>
+      <p>Connecté en tant que <strong id="adminIdentity"></strong> · <button type="button" id="logoutButton" class="admin-toggle">Se déconnecter</button></p>
+      <h2 id="formTitle">Ajouter un parfum</h2>
+      <form id="productForm">
+      <div class="admin-grid">
+        <div><label for="newName">Nom du parfum *</label><input id="newName" required placeholder="Ex. Oud Prestige"></div>
+        <div><label for="newPrice">Prix en FCFA *</label><input id="newPrice" type="number" min="1" step="1" required placeholder="Ex. 25000"></div>
+        <div><label for="newType">Catégorie *</label><select id="newType" required><option>Homme</option><option>Femme</option><option selected>Mixte</option></select></div>
+        <div><label for="newImage">Lien de la photo (facultatif)</label><input id="newImage" type="url" placeholder="https://..."></div>
+      </div>
+      <label for="newDesc">Description</label><textarea id="newDesc" placeholder="Décris brièvement le parfum..."></textarea>
+      <button class="btn" type="submit" id="productSubmit">Ajouter le produit</button><button class="btn btn-cancel" type="button" id="cancelEdit" hidden>Annuler</button>
+    </form>
+    <div class="admin-products">
+      <h2>Produits enregistrés</h2>
+      <div id="adminList"></div>
+    </div>
+    <p class="admin-hint">Les produits sont enregistrés dans Firebase Firestore et sont donc partagés avec tous les visiteurs de la boutique. Protège les identifiants de ton compte commerçant.</p>
+    </div>
+    <p id="firebaseSetupMessage" class="admin-hint">Configuration Firebase nécessaire : renseigne les clés de ton projet dans le code, puis publie les règles Firestore fournies avec ce fichier.</p>
+  </div>
+</section>
+
+</main>
+<footer>© <span id="year"></span> Maison Sillage — Parfums pour toutes les personnalités.</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const WHATSAPP_NUMBER = "2250595009935";
+const SNAP_USERNAME = "bvlvdji_44";
+
+// 1) Remplace les valeurs ci-dessous par celles de ton projet Firebase.
+const firebaseConfig = {
+  apiKey: "AIzaSyB7BE2DGoIJTR95Dx1GWz_V2hOr2shGM50",
+  authDomain: "maison-des-siallage.firebaseapp.com",
+  projectId: "maison-des-siallage",
+  storageBucket: "maison-des-siallage.firebasestorage.app",
+  messagingSenderId: "1068168946492",
+  appId: "1:1068168946492:web:a905ad1c88d190519cb439"
+};
+const configured = !Object.values(firebaseConfig).some(v => String(v).startsWith("COLLE_ICI"));
+const productsEl = document.getElementById("products");
+const cart = {};
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const TYPES = ["Homme","Femme","Mixte"];
+const safeType = t => TYPES.includes(t) ? t : "Mixte";
+const DEFAULT_IMG = "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=80";
+const safeImg = u => /^https:\/\//i.test(String(u||"")) ? String(u) : DEFAULT_IMG;
+const money = n => new Intl.NumberFormat("fr-FR").format(Number(n)||0)+" FCFA";
+let parfums = [];
+let activeFilter = "Tous";
+let editingId = null;
+let db = null, auth = null, stopProductsListener = null, currentUser = null;
+
+function renderProducts(){
+ const qText=document.getElementById("search").value.toLowerCase().trim();
+ const shown=parfums.filter(p=>(activeFilter==="Tous"||p.type===activeFilter)&&(p.name+" "+(p.desc||"")).toLowerCase().includes(qText));
+ productsEl.innerHTML=shown.map(p=>`<article class="product${p.soldOut?' sold':''}"><img src="${esc(safeImg(p.img))}" alt="Flacon de ${esc(p.name)}" loading="lazy" referrerpolicy="no-referrer"><div class="info"><div class="tag">${esc(safeType(p.type))}${p.soldOut?'<span class="badge-sold">Épuisé</span>':''}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.desc)}</div><div class="price">${money(p.price)}</div>${p.soldOut?'<button class="btn" type="button" disabled>Épuisé</button>':`<button class="btn" type="button" data-add="${esc(p.id)}">Ajouter au panier</button>`}</div></article>`).join("")||'<p>Aucun parfum disponible pour le moment.</p>';
+}
+function renderCart(){
+ const entries=Object.entries(cart).filter(([,qty])=>qty>0);
+ document.getElementById("cart").innerHTML=entries.map(([id,qty])=>{
+   const p=parfums.find(x=>String(x.id)===String(id));
+   if(!p)return "";
+   return `<div class="cart-line"><span>${esc(p.name)}<br><strong>${money(p.price*qty)}</strong><br><span class="qty"><button type="button" data-dec="${esc(id)}" aria-label="Moins">−</button><b>${qty}</b><button type="button" data-inc="${esc(id)}" aria-label="Plus">+</button></span></span><span><button class="remove" data-remove="${esc(id)}" type="button">Retirer</button></span></div>`;
+ }).join("")||'<p class="empty">Votre panier est vide. Choisissez un parfum dans la collection.</p>';
+ const total=entries.reduce((sum,[id,qty])=>{const p=parfums.find(x=>String(x.id)===String(id));return sum+(p?Number(p.price)*qty:0)},0);
+ document.getElementById("total").textContent=money(total);
+}
+function renderAdmin(){
+ const target=document.getElementById("adminList");
+ if(!target)return;
+ target.innerHTML=parfums.map(p=>`<div class="admin-row"><span><strong>${esc(p.name)}</strong><br>${money(p.price)} · ${esc(safeType(p.type))}${p.soldOut?" · <em>épuisé</em>":""}</span><span class="admin-actions"><button type="button" class="alt" data-edit="${esc(p.id)}">Modifier</button><button type="button" class="alt" data-stock="${esc(p.id)}">${p.soldOut?"Remettre en stock":"Marquer épuisé"}</button><button type="button" data-delete="${esc(p.id)}">Supprimer</button></span></div>`).join("") || '<p class="empty">Aucun produit enregistré.</p>';
+}
+function showManager(user){
+ currentUser=user;
+ document.getElementById("loginArea").hidden=!!user;
+ document.getElementById("managerArea").hidden=!user;
+ document.getElementById("adminIdentity").textContent=user?.email || "";
+ document.getElementById("firebaseSetupMessage").hidden=!!user;
+ if(user) renderAdmin();
+}
+function setLoginMessage(message){document.getElementById("loginMessage").textContent=message;}
+
+if(configured){
+ try{
+   const app=initializeApp(firebaseConfig);
+   auth=getAuth(app);
+   db=getFirestore(app);
+   onAuthStateChanged(auth,user=>{
+     showManager(user);
+     if(stopProductsListener){stopProductsListener();stopProductsListener=null;}
+     const productsQuery=query(collection(db,"products"),orderBy("createdAt","desc"));
+     stopProductsListener=onSnapshot(productsQuery,snapshot=>{
+       parfums=snapshot.docs.map(d=>({id:d.id,...d.data()}));
+       renderProducts();renderCart();renderAdmin();
+     },error=>{
+       console.error(error);
+       productsEl.innerHTML="<p>Impossible de charger les parfums. Vérifie les règles Firestore.</p>";
+     });
+   });
+   document.getElementById("firebaseSetupMessage").textContent="Firebase configuré. Les produits sont chargés depuis la base de données en ligne.";
+ }catch(error){
+   console.error(error);
+   document.getElementById("firebaseSetupMessage").textContent="Erreur de configuration Firebase : vérifie les paramètres du projet.";
+ }
+}else{
+ document.getElementById("firebaseSetupMessage").textContent="Avant utilisation : remplace les six valeurs COLLE_ICI dans firebaseConfig avec les informations de ton projet Firebase. Puis crée le compte commerçant dans Firebase Authentication.";
+ productsEl.innerHTML='<p>La boutique sera active après la configuration Firebase et l’ajout des premiers parfums par le commerçant.</p>';
+}
+
+productsEl.addEventListener("click",e=>{
+ const b=e.target.closest("[data-add]");if(!b)return;
+ const id=b.dataset.add;cart[id]=(cart[id]||0)+1;renderCart();
+ b.textContent="Ajouté ✓";setTimeout(()=>b.textContent="Ajouter au panier",900);
+});
+document.getElementById("cart").addEventListener("click",e=>{
+ const inc=e.target.closest("[data-inc]"),dec=e.target.closest("[data-dec]"),rem=e.target.closest("[data-remove]");
+ if(inc){const id=inc.dataset.inc;cart[id]=Math.min((cart[id]||0)+1,20);}
+ else if(dec){const id=dec.dataset.dec;cart[id]=(cart[id]||0)-1;if(cart[id]<=0)delete cart[id];}
+ else if(rem){delete cart[rem.dataset.remove];}
+ else return;
+ renderCart();
+});
+document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{
+ activeFilter=b.dataset.filter;
+ document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===b));
+ renderProducts();
+}));
+document.getElementById("search").addEventListener("input",renderProducts);
+
+document.getElementById("orderForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const entries=Object.entries(cart).filter(([,qty])=>qty>0);
+ if(!entries.length){alert("Ajoute au moins un parfum dans ton panier.");return;}
+ const name=document.getElementById("customer").value.trim();
+ const phone=document.getElementById("phone").value.trim();
+ const city=document.getElementById("city").value.trim();
+ const details=document.getElementById("details").value.trim();
+ let total=0;
+ const lines=entries.map(([id,qty])=>{
+   const p=parfums.find(x=>String(x.id)===String(id));
+   if(!p||p.soldOut)return "";
+   total+=Number(p.price)*qty;
+   return `- ${p.name} (${safeType(p.type)}) x${qty} : ${money(p.price*qty)}`;
+ }).filter(Boolean);
+ const message=`Bonjour, je souhaite commander sur Maison Sillage.\n\n${lines.join("\n")}\n\nTotal estimé : ${money(total)}\n\nNom : ${name}\nTéléphone : ${phone}\nVille/Commune : ${city}\nPrécisions : ${details||"Aucune"}\n\nMerci de me confirmer la disponibilité et les frais de livraison.`;
+ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
+});
+
+document.getElementById("adminToggle").addEventListener("click",()=>{
+ const panel=document.getElementById("adminPanel");
+ panel.classList.toggle("open");
+ document.getElementById("adminToggle").textContent=panel.classList.contains("open")?"Fermer l'espace commerçant":"Ouvrir l'espace commerçant";
+});
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!auth){setLoginMessage("Configure d'abord Firebase dans le code.");return;}
+ const email=document.getElementById("adminEmail").value.trim();
+ const password=document.getElementById("adminPassword").value;
+ try{await signInWithEmailAndPassword(auth,email,password);setLoginMessage("");}
+ catch(error){console.error(error);setLoginMessage("Connexion impossible. Vérifie ton e-mail et ton mot de passe.");}
+});
+document.getElementById("logoutButton").addEventListener("click",async()=>{
+ if(auth)await signOut(auth);
+});
+document.getElementById("productForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!currentUser||!db){alert("Connecte-toi avec le compte commerçant.");return;}
+ const name=document.getElementById("newName").value.trim();
+ const price=Number(document.getElementById("newPrice").value);
+ const type=document.getElementById("newType").value;
+ const imageUrl=document.getElementById("newImage").value.trim();
+ const desc=document.getElementById("newDesc").value.trim()||"Découvrez cette fragrance dans notre boutique.";
+ if(!name||name.length>80||!Number.isFinite(price)||price<=0){alert("Entre un nom (80 caractères max) et un prix valide supérieur à 0.");return;}
+ if(!TYPES.includes(type)){alert("Catégorie invalide.");return;}
+ if(imageUrl&&(!/^https:\/\//i.test(imageUrl)||imageUrl.length>500)){alert("Le lien de la photo doit commencer par https:// (500 caractères max).");return;}
+ if(desc.length>500){alert("Description trop longue (500 caractères max).");return;}
+ try{
+   if(editingId){
+     await updateDoc(doc(db,"products",editingId),{name,price,type,img:imageUrl||"",desc});
+     stopEditing();
+     alert("Produit modifié.");
+   }else{
+     await addDoc(collection(db,"products"),{name,price,type,img:imageUrl||"",desc,soldOut:false,createdAt:serverTimestamp()});
+     e.target.reset();
+     alert("Produit publié dans la boutique en ligne.");
+   }
+ }catch(error){console.error(error);alert("Enregistrement impossible. Vérifie ta connexion et les règles Firestore.");}
+});
+function stopEditing(){
+ editingId=null;document.getElementById("productForm").reset();
+ document.getElementById("formTitle").textContent="Ajouter un parfum";
+ document.getElementById("productSubmit").textContent="Ajouter le produit";
+ document.getElementById("cancelEdit").hidden=true;
+}
+document.getElementById("cancelEdit").addEventListener("click",stopEditing);
+document.getElementById("adminList").addEventListener("click",async e=>{
+ if(!currentUser||!db)return;
+ const ed=e.target.closest("[data-edit]");
+ if(ed){
+   const p=parfums.find(x=>x.id===ed.dataset.edit);if(!p)return;
+   editingId=p.id;
+   document.getElementById("newName").value=p.name||"";
+   document.getElementById("newPrice").value=p.price||"";
+   document.getElementById("newType").value=safeType(p.type);
+   document.getElementById("newImage").value=p.img||"";
+   document.getElementById("newDesc").value=p.desc||"";
+   document.getElementById("formTitle").textContent="Modifier le parfum";
+   document.getElementById("productSubmit").textContent="Enregistrer les modifications";
+   document.getElementById("cancelEdit").hidden=false;
+   document.getElementById("formTitle").scrollIntoView({behavior:"smooth"});
+   return;
+ }
+ const st=e.target.closest("[data-stock]");
+ if(st){
+   const p=parfums.find(x=>x.id===st.dataset.stock);if(!p)return;
+   try{await updateDoc(doc(db,"products",p.id),{soldOut:!p.soldOut});}
+   catch(error){console.error(error);alert("Changement impossible. Vérifie les règles Firestore.");}
+   return;
+ }
+ const b=e.target.closest("[data-delete]");if(!b)return;
+ if(!confirm("Supprimer ce produit de la boutique pour tous les visiteurs ?"))return;
+ try{await deleteDoc(doc(db,"products",b.dataset.delete));}
+ catch(error){console.error(error);alert("Suppression impossible. Vérifie les règles Firestore.");}
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+renderCart();
+</script>
+</body>
+  </html>
